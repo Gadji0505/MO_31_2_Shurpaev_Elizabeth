@@ -1,7 +1,6 @@
-﻿using NeuroNetModel.NeuroNet;
-using static System.Math;
+﻿using static System.Math;
 
-namespace NeuroNetModel.NeuroNet
+namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
 {
     class Neuron
     {

@@ -1,4 +1,4 @@
-﻿namespace NeuroNetModel.NeuroNet
+﻿namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
 {
     enum MemoryMode // режимы работы памяти
     {
