@@ -62,6 +62,7 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
         {
             char[] delim = new char[] { ';', ' ' };
             string tmpStr;
+            //Доделать по отографиям и доделать метод
             switch (mm)
             {
                 case MemoryMode.GET:
