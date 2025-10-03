@@ -62,18 +62,53 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
         {
             char[] delim = new char[] { ';', ' ' };
             string tmpStr;
-            //Доделать по отографиям и доделать метод
+            string[] tmpStrWeights;
+            double[,] weights = new double[numofneurons, numofprevneurons + 1];
+
             switch (mm)
             {
                 case MemoryMode.GET:
+                    tmpStrWeights = File.ReadAllLines(path);
+                    string[] memory_element;
+                    for (int i = 0; i < numofneurons; i++)
+                    {
+                        memory_element = tmpStrWeights[i].Split(delim);
+                        for (int j = 0; j < numofprevneurons + 1; j++)
+                        {
+                            weights[i, j] = double.Parse(memory_element[j].Replace(',', '.'),
+                                System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                    }
                     break;
                 case MemoryMode.SET:
+                    using (StreamWriter sw = new StreamWriter(path, false))
+                    {
+                        for (int i = 0; i < numofneurons; i++)
+                        {
+                            tmpStr = "";
+                            for (int j = 0; j < numofprevneurons + 1; j++)
+                            {
+                                weights[i, j] = Neurons[i].Weights[j];
+                                tmpStr += weights[i, j].ToString().Replace(',', '.') + ";";
+                            }
+                            sw.WriteLine(tmpStr.TrimEnd(';'));
+                        }
+                    }
                     break;
                 case MemoryMode.INIT:
+                    Random random = new Random();
+                    for (int i = 0; i < numofneurons; i++)
+                    {
+                        for (int j = 0; j < numofprevneurons + 1; j++)
+                        {
+                            weights[i, j] = random.NextDouble() * 2 - 1; // случайные значения от -1 до 1
+                        }
+                    }
                     break;
                 default:
                     break;
             }
+            return weights;
         }
         
     }
