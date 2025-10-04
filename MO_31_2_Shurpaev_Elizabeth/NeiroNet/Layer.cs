@@ -99,9 +99,10 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
                     Random random = new Random();
                     for (int i = 0; i < numofneurons; i++)
                     {
+                        //double[] neuronWeights = GenerateRandomWeights(numofprevneurons + 1, random);
                         for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            weights[i, j] = random.NextDouble() * 2 - 1; // случайные значения от -1 до 1
+                            weights[i, j] = random.NextDouble() * 2 - 1;
                         }
                     }
                     break;
@@ -109,6 +110,15 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
                     break;
             }
             return weights;
+        }
+
+        private double[] GenerateWeights(int count, Random random)
+        {
+            double[] weights = new double[count];
+            for (int i = 0; i < count; i++)
+            {
+                double[] u1 = random.NextDouble() - 1;
+            }
         }
         
     }
