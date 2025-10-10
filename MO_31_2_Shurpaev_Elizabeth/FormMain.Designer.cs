@@ -46,6 +46,7 @@
             this.numericUpDown_NecessaryOutput = new System.Windows.Forms.NumericUpDown();
             this.button16 = new System.Windows.Forms.Button();
             this.button17 = new System.Windows.Forms.Button();
+            this.button_CheckWeightsFile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_NecessaryOutput)).BeginInit();
             this.SuspendLayout();
             // 
@@ -260,6 +261,16 @@
             this.button17.UseVisualStyleBackColor = true;
             this.button17.Click += new System.EventHandler(this.button_SaveTrainSample_Click);
             // 
+            // button_CheckWeightsFile
+            // 
+            this.button_CheckWeightsFile.Location = new System.Drawing.Point(333, 436);
+            this.button_CheckWeightsFile.Name = "button_CheckWeightsFile";
+            this.button_CheckWeightsFile.Size = new System.Drawing.Size(147, 23);
+            this.button_CheckWeightsFile.TabIndex = 18;
+            this.button_CheckWeightsFile.Text = "Проверить файл весов";
+            this.button_CheckWeightsFile.UseVisualStyleBackColor = true;
+            this.button_CheckWeightsFile.Click += new System.EventHandler(this.button_CheckWeightsFile_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,6 +278,7 @@
             this.BackColor = System.Drawing.Color.Gray;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(800, 497);
+            this.Controls.Add(this.button_CheckWeightsFile);
             this.Controls.Add(this.button17);
             this.Controls.Add(this.button16);
             this.Controls.Add(this.numericUpDown_NecessaryOutput);
@@ -314,6 +326,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_NecessaryOutput;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.Button button_CheckWeightsFile;
     }
 }
 

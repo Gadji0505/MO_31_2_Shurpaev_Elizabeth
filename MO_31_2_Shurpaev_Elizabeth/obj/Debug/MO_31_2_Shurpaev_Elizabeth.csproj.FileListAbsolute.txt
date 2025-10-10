@@ -13,7 +13,6 @@ C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth
 C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth\bin\Debug\MO_31_2_Shurpaev_Elizabeth.pdb
 C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.csproj.AssemblyReference.cache
 C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.exe.config
-C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.FormMain.resources
 C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.Properties.Resources.resources
 C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.csproj.GenerateResource.cache
 C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.csproj.CoreCompileInputs.cache
@@ -26,3 +25,4 @@ Z:\MO_31_2_Shurpaev_Elizabeth-master\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_
 Z:\MO_31_2_Shurpaev_Elizabeth-master\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.csproj.CoreCompileInputs.cache
 Z:\MO_31_2_Shurpaev_Elizabeth-master\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.exe
 Z:\MO_31_2_Shurpaev_Elizabeth-master\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.pdb
+C:\Users\User\source\repos\MO_31_2_Shurpaev_Elizabeth\MO_31_2_Shurpaev_Elizabeth\obj\Debug\MO_31_2_Shurpaev_Elizabeth.FormMain.resources

@@ -99,9 +99,23 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
                     Random random = new Random();
                     for (int i = 0; i < numofneurons; i++)
                     {
+                        double[] neuronWeights = GenerateRandomWeightsCLT(numofprevneurons + 1, random);
                         for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            weights[i, j] = random.NextDouble() * 2 - 1; // случайные значения от -1 до 1
+                            weights[i, j] = neuronWeights[j];
+                        }
+                    }
+                    // ✅ сохраняем сразу после генерации
+                    using (StreamWriter sw = new StreamWriter(path, false))
+                    {
+                        for (int i = 0; i < numofneurons; i++)
+                        {
+                            string line = "";
+                            for (int j = 0; j < numofprevneurons + 1; j++)
+                            {
+                                line += weights[i, j].ToString(System.Globalization.CultureInfo.InvariantCulture) + ";";
+                            }
+                            sw.WriteLine(line.TrimEnd(';'));
                         }
                     }
                     break;
@@ -110,6 +124,23 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
             }
             return weights;
         }
-        
+
+        public double[] GenerateRandomWeightsCLT(int count, Random random)
+        {
+            double[] weights = new double[count];
+            const int samples = 12;
+
+            for (int i = 0; i < count; i++)
+            {
+                double sum = 0;
+                for (int j = 0; j < samples; j++)
+                {
+                    sum += random.NextDouble();
+                }
+                weights[i] = (sum - samples / 2.0) / Math.Sqrt(samples / 12.0);
+            }
+
+            return weights;
+        }
     }
 }

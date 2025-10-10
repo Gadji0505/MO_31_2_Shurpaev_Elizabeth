@@ -8,56 +8,98 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using MO_31_2_Shurpaev_Elizabeth.NeiroNet;
 
 namespace MO_31_2_Shurpaev_Elizabeth
 {
     public partial class FormMain : Form
     {
-        private double[] inputPixels; //массив входных данных
+        private double[] inputPixels; // массив входных данных
 
-        //Конструктор
         public FormMain()
         {
             InitializeComponent();
-
             inputPixels = new double[15];
         }
 
-        //обработчик событий клика
         private void Changing_State_Pixel_Button_Click(object sender, EventArgs e)
         {
-            //если изначально кнопка белая
-            if(((Button)sender).BackColor == Color.White)
+            Button btn = (Button)sender;
+
+            if (btn.BackColor == Color.White)
             {
-                ((Button)sender).BackColor = Color.Black;   //изменяем цвет кнопки
-                inputPixels[((Button)sender).TabIndex] = 1d;    //изменяем значение в массиве
+                btn.BackColor = Color.Black;
+                inputPixels[btn.TabIndex] = 1d;
             }
-            else    //если изначально кнопка черная
+            else
             {
-                ((Button)sender).BackColor = Color.White;   //меняем цвет кнопки
-                inputPixels[((Button)sender).TabIndex] = 0d;    //меняем значение в массиве
+                btn.BackColor = Color.White;
+                inputPixels[btn.TabIndex] = 0d;
             }
         }
 
-        //сохранить в файл ОБУЧАЮЩИЙ пример
         private void button_SaveTrainSample_Click(object sender, EventArgs e)
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "train.txt";
             string tmpStr = numericUpDown_NecessaryOutput.Value.ToString();
 
-            for(int i = 0; i < inputPixels.Length; i++)
-            {
+            for (int i = 0; i < inputPixels.Length; i++)
                 tmpStr += " " + inputPixels[i].ToString();
-            }
-            tmpStr += "\n"; //преход на новую строку текста
 
-            File.AppendAllText(path, tmpStr);  //добавление текста tmpStr
-                                                //в файл, расположенный по path
+            tmpStr += "\n";
+            File.AppendAllText(path, tmpStr);
         }
 
+        // Создание папки memory и файлов весов, если их нет
         private void FormMain_Load(object sender, EventArgs e)
         {
+            try
+            {
+                string pathDir = AppDomain.CurrentDomain.BaseDirectory + "memory\\";
+                if (!Directory.Exists(pathDir))
+                    Directory.CreateDirectory(pathDir);
 
+                // создаём пустые файлы, если их нет
+                string[] layerNames = { "InputLayer", "HiddenLayer", "OutputLayer" };
+                foreach (var name in layerNames)
+                {
+                    string path = pathDir + name + "_memory.csv";
+                    if (!File.Exists(path))
+                    {
+                        File.WriteAllText(path, ""); // создаём пустой
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка инициализации памяти: " + ex.Message,
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button_CheckWeightsFile_Click(object sender, EventArgs e)
+        {
+            string pathDir = AppDomain.CurrentDomain.BaseDirectory + "memory\\";
+            if (!Directory.Exists(pathDir))
+            {
+                MessageBox.Show("Папка memory не найдена!", "Проверка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string[] files = Directory.GetFiles(pathDir, "*_memory.csv", SearchOption.TopDirectoryOnly);
+
+            if (files.Length == 0)
+            {
+                MessageBox.Show("Файлы с весами не найдены!", "Проверка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                string fileList = string.Join("\n", files.Select(f => Path.GetFileName(f)));
+                MessageBox.Show($"Найдены файлы весов:\n{fileList}",
+                    "Проверка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
