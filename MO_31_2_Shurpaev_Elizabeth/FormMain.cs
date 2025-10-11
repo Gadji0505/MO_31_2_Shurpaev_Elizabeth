@@ -15,11 +15,14 @@ namespace MO_31_2_Shurpaev_Elizabeth
     public partial class FormMain : Form
     {
         private double[] inputPixels; // массив входных данных
+        private Network network; //объявление нейросети
 
+        //конструктор
         public FormMain()
         {
             InitializeComponent();
             inputPixels = new double[15];
+            network = new Network();
         }
 
         private void Changing_State_Pixel_Button_Click(object sender, EventArgs e)

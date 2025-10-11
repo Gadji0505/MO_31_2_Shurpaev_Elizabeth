@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
+﻿namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
 {
     class Network
     {
+        private InpytLayer input_layer = null;
+        private HiddenLayer hidden_layer1 = new HiddenLayer(71, 15, NeuronType.Hidden, nameof(hidden_layer1));
+        private HiddenLayer hidden_layer2 = new HiddenLayer(34, 71, NeuronType.Hidden, nameof(hidden_layer2));
+        private OutputLayer output_layer = new OutputLayer(10, 34, NeuronType.Output, nameof(output_layer));
+
+        private double[] fact = new double[10]; //массив файктического выхода сети
+        private double[] e_error_avr; //среднее значение энергии ошибки эпохи обучения
+
+        //свойста
+        public double[] Fact { get => fact; } //массив фактического выхода сети
+
+        //среднее значение энергии ошибки эпохи обучения
+        public double[] E_error_avr { get => e_error_avr; set => e_error_avr = value; }
+
+        //конструктор
+        public Network() { }
     }
 }

@@ -142,5 +142,8 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
 
             return weights;
         }
+
+        abstract public void Recognizee(Network net, Layer nextLayer);
+        abstract public double[] BackwardPass(double[] stuff);
     }
 }
