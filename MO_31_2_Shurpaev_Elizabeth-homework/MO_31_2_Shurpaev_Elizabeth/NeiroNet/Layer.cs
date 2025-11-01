@@ -11,7 +11,7 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
         string pathFileWeights;
         protected int numofneurons;
         protected int numofprevneurons;
-        protected const double learningrate = 0.060;
+        protected const double learningrate = 0.0006;
         protected const double momentum = 0.050;
         protected double[,] lastdeltaweights;
         protected Neuron[] neurons;
