@@ -1,9 +1,10 @@
+using MO_31_2_Shurpaev_Elizabeth.NeiroNet;
 using System;
 using System.IO;
 
 namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
 {
-    class InpytLayer
+    class InputLayer
     {
         private double[,] trainset;
         private double[,] testset;
@@ -11,7 +12,7 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
         public double[,] Trainset { get => trainset; }
         public double[,] Testset { get => testset; }
 
-        public InpytLayer(NetworkMode nm)
+        public InputLayer(NetworkMode nm)
         {
             string path = AppDomain.CurrentDomain.BaseDirectory;
             string[] tmpArrStr;
@@ -36,7 +37,7 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
                     break;
 
                 case NetworkMode.Test:
-                    tmpArrStr = File.ReadAllLines(path + "train.txt");
+                    tmpArrStr = File.ReadAllLines(path + "test.txt");
                     testset = new double[tmpArrStr.Length, 16];
 
                     for (int i = 0; i < tmpArrStr.Length; i++)
@@ -51,36 +52,26 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
                     Shuffling_Array_Rows(testset);
                     break;
             }
-        }
 
+        }
         public void Shuffling_Array_Rows(double[,] arr)
         {
-            int rows = arr.GetLength(0);
-            int cols = arr.GetLength(1);
-            Random rand = new Random();
+            Random random = new Random();
+            int rowCount = arr.GetLength(0);
+            int colCount = arr.GetLength(1);
 
-            for (int i = rows - 1; i > 0; i--)
+            // Алгоритм Фишера-Йетса для перемешивания строк
+            for (int i = rowCount - 1; i > 0; i--)
             {
-                int j = rand.Next(i + 1);
+                // Выбираем случайный индекс от 0 до i
+                int j = random.Next(i + 1);
 
-                if (i != j)
+                // Меняем местами строки i и j
+                for (int col = 0; col < colCount; col++)
                 {
-                    double[] tempRow = new double[cols];
-
-                    for (int k = 0; k < cols; k++)
-                    {
-                        tempRow[k] = arr[i, k];
-                    }
-
-                    for (int k = 0; k < cols; k++)
-                    {
-                        arr[i, k] = arr[j, k];
-                    }
-
-                    for (int k = 0; k < cols; k++)
-                    {
-                        arr[j, k] = tempRow[k];
-                    }
+                    double temp = arr[i, col];
+                    arr[i, col] = arr[j, col];
+                    arr[j, col] = temp;
                 }
             }
         }

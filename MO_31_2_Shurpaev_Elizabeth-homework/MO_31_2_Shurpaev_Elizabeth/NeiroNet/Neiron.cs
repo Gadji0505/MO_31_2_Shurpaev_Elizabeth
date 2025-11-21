@@ -4,45 +4,43 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
 {
     class Neuron
     {
-        private NeuronType type; // тип нейрона
-        private double[] weights; // веса
-        private double[] inputs; // входы
-        private double output; // выход
-        private double derivative; // производная
+        //поля
+        private NeuronType type; //тип нейрона
+        private double[] weights; //его вес
+        private double[] inputs; //его входы
+        private double output; //выход
+        private double derivative; //производная
 
-        // константы для функции активации
         private double a = 0.01d;
+        //Константы для функции активации
 
-        // свойства
+        //Свойства
         public double[] Weights { get => weights; set => weights = value; }
         public double[] Inputs { get => inputs; set => inputs = value; }
         public double Output { get => output; }
         public double Derivative { get => derivative; }
-
-        // конструктор
+        //Конструктор
         public Neuron(double[] memoryWeights, NeuronType typeNeuron)
         {
             type = typeNeuron;
             weights = memoryWeights;
         }
-
         public void Activator(double[] i)
         {
-            inputs = i; // передача вектора входного сигнала в массив входных данных нейрона
-            double sum = weights[0]; // аффинное преобразование через смещение (нулевой вес)
+            inputs = i; //передача вектора входного сигнала в массив входных данных нейрона
+            double sum = weights[0];
 
-            for (int j = 0; j < inputs.Length; j++) // цикл вычисления индуцированного поля
+            for (int j = 0; j < inputs.Length; j++)
             {
-                sum += inputs[j] * weights[j + 1]; // линейные преобразования входных сигналов
+                sum += inputs[j] * weights[j + 1];
             }
-
             switch (type)
             {
-                case NeuronType.Hidden: // для нейронов скрытого слоя
+                case NeuronType.Hidden:
                     output = LeakyReLU(sum);
                     derivative = LeakyReLU_Derivativator(sum);
                     break;
-                case NeuronType.Output: // для нейронов выходного слоя
+                case NeuronType.Output:
                     output = Exp(sum);
                     break;
             }
@@ -51,17 +49,16 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
         // функция активации нейрона
         private double LeakyReLU(double sum)
         {
-            return sum > 0 ? sum : a * sum;
+            output = (sum >= 0) ? sum : a * sum;
+            return output;
         }
 
         private double LeakyReLU_Derivativator(double sum)
         {
-            return sum > 0 ? 1 : a;
+            derivative = (sum >= 0) ? 1.0 : a;
+            return derivative;
         }
 
-        //private double Exp(double sum)
-        //{
-        //    return 1.0 / (1.0 + Exp(-sum));
-        //}
+        //архитектура нейронов 15-71-31-10
     }
 }

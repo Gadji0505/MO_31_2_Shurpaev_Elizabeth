@@ -1,24 +1,23 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
 
 namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
 {
     abstract class Layer
     {
-        protected string name_Layer;
-        string pathDirWeights;
-        string pathFileWeights;
-        protected int numofneurons;
-        protected int numofprevneurons;
-        protected const double learningrate = 0.0006;
-        protected const double momentum = 0.050;
-        protected double[,] lastdeltaweights;
-        protected Neuron[] neurons;
-
-
+        //Поля
+        protected string name_Layer; //название слоя
+        string pathDirWeights; //путь к каталогу, где находится файл синаптических весов
+        string pathFileWeights; //путь к файлу саниптическов весов
+        protected int numofneurons; //число нейронов текущего слоя
+        protected int numofprevneurons; //число нейронов предыдущего слоя
+        protected const double learningrate = 0.0035; //скорость обучения
+        protected const double momentum = 0.9; //момент инерции
+        protected double[,] lastdeltaweights; //веса предыдущей итерации
+        protected Neuron[] neurons; //массив нейронов текущего слоя
+        //Свойства
         public Neuron[] Neurons { get => neurons; set => neurons = value; }
-        public double[] Date
+        public double[] Data //Передача входных сигналов на нейроны слоя и авктиватор
         {
             set
             {
@@ -28,127 +27,139 @@ namespace MO_31_2_Shurpaev_Elizabeth.NeiroNet
                 }
             }
         }
+
+        //Конструктор
         protected Layer(int non, int nopn, NeuronType nt, string nm_Layer)
         {
-            numofneurons = non;
-            numofprevneurons = nopn;
-            Neurons = new Neuron[non];
-            name_Layer = nm_Layer;
+            numofneurons = non; //количество нейронов текущего слоя
+            numofprevneurons = nopn; //количество нейронов предыдущего слоя
+            Neurons = new Neuron[non]; //определение массива нейронов
+            name_Layer = nm_Layer; //наиминование слоя
             pathDirWeights = AppDomain.CurrentDomain.BaseDirectory + "memory\\";
             pathFileWeights = pathDirWeights + name_Layer + "_memory.csv";
 
+            double[,] Weights; //временный массив синаптических весов
             lastdeltaweights = new double[non, nopn + 1];
-            double[,] Weights;
 
-            if (File.Exists(pathFileWeights))
-                Weights = WeightInitialize(MemoryMode.GET, pathFileWeights);
+            if (File.Exists(pathFileWeights)) //определяет существует ли pathFileWeights
+                Weights = WeightInitialize(MemoryMode.GET, pathFileWeights); //считывает данные из файла
             else
             {
                 Directory.CreateDirectory(pathDirWeights);
                 Weights = WeightInitialize(MemoryMode.INIT, pathFileWeights);
             }
 
-            for (int i = 0; i < non; i++)
+            for (int i = 0; i < non; i++) //цикл формирования нейронов слоя и заполнения
             {
-                double[] tmp_weigts = new double[nopn + 1];
-                for (int j = 0; j < nopn + 1; j++)
+                double[] tmp_weights = new double[nopn + 1];
+                for (int j = 0; j < nopn; j++)
                 {
-                    tmp_weigts[j] = Weights[i, j];
+                    tmp_weights[j] = Weights[i, j];
                 }
-                Neurons[i] = new Neuron(tmp_weigts, nt);
+                Neurons[i] = new Neuron(tmp_weights, nt); //заполнение массива нейронами
             }
         }
+
+        //Метод работы с массивом синаптических весов слоя
         public double[,] WeightInitialize(MemoryMode mm, string path)
         {
             char[] delim = new char[] { ';', ' ' };
-            string tmpStr;
             string[] tmpStrWeights;
             double[,] weights = new double[numofneurons, numofprevneurons + 1];
 
             switch (mm)
             {
+                // парсинг в тип double строкового формата веса нейронов из csv - получает значения весов нейронов
                 case MemoryMode.GET:
-                    tmpStrWeights = File.ReadAllLines(path);
-                    string[] memory_element;
+                    tmpStrWeights = File.ReadAllLines(path);        // считывание строк текстового файла csv весов нейрона (в tmpStrWeights каждый i-ый элемент это строка весов)
+                    string[] memory_elemnt; // массив, где каждый i-ый элемент это один вес нейрона (берётся одна строка из tmpStrWeights)
+
+                    // строка весов нейронов
                     for (int i = 0; i < numofneurons; i++)
                     {
-                        memory_element = tmpStrWeights[i].Split(delim);
+                        memory_elemnt = tmpStrWeights[i].Split(delim);  // разбивает строку
+                        // каждый отдельный вес нейрона
                         for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            weights[i, j] = double.Parse(memory_element[j].Replace(',', '.'),
+                            weights[i, j] = double.Parse(memory_elemnt[j].Replace(',', '.'),
                                 System.Globalization.CultureInfo.InvariantCulture);
                         }
                     }
                     break;
+
+                // парсинг в строковой формат веса нейронов в csv (обратный MemoryMode.GET) - сохраняет готовые веса нейронов
                 case MemoryMode.SET:
-                    using (StreamWriter sw = new StreamWriter(path, false))
-                    {
-                        for (int i = 0; i < numofneurons; i++)
-                        {
-                            tmpStr = "";
-                            for (int j = 0; j < numofprevneurons + 1; j++)
-                            {
-                                weights[i, j] = Neurons[i].Weights[j];
-                                tmpStr += weights[i, j].ToString().Replace(',', '.') + ";";
-                            }
-                            sw.WriteLine(tmpStr.TrimEnd(';'));
-                        }
-                    }
-                    break;
-                case MemoryMode.INIT:
-                    Random random = new Random();
+                    tmpStrWeights = new string[numofneurons]; // создаём строку из весов нейрона (tmpStrWeights это массив, где каждый i-ый элемент это строка весов) 
                     for (int i = 0; i < numofneurons; i++)
                     {
-                        double[] neuronWeights = GenerateRandomWeightsCLT(numofprevneurons + 1, random);
+                        string[] memory_elemnt2 = new string[numofprevneurons + 1];
                         for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            weights[i, j] = neuronWeights[j];
-                            //if (weights[i, j] >= 1.0)
-                            //    weights[i, j] = 1.0;
-                            //if (weights[i, j] <= -1.0)
-                            //    weights[i, j] = -1.0;
+                            memory_elemnt2[j] = neurons[i].Weights[j]
+                                .ToString(System.Globalization.CultureInfo.InvariantCulture)
+                                .Replace('.', ',');
                         }
+                        tmpStrWeights[i] = string.Join(";", memory_elemnt2);
                     }
+                    File.WriteAllLines(path, tmpStrWeights);
+                    break;
 
-                    using (StreamWriter sw = new StreamWriter(path, false))
+                // инициализация весов для нейронов
+                case MemoryMode.INIT:
+                    // Защита от деления на ноль
+                    if (numofprevneurons <= 0)
+                        throw new InvalidOperationException("Количество нейронов предыдущего слоя должно быть положительным при инициализации весов.");
+
+                    Random random = new Random(); // или используйте внеклассовый экземпляр Random для лучшей случайности
+
+                    // Параметр активации (Leaky ReLU)
+                    const double alpha = 0.01;
+
+                    // Fan-in — количество входов (обычно не включает bias)
+                    int fanIn = numofprevneurons;
+
+                    // Граница для равномерного распределения: Xavier/He для Leaky ReLU
+                    double scale = Math.Sqrt(6.0 / ((1.0 + alpha * alpha) * fanIn));
+
+                    // Инициализация весов
+                    for (int i = 0; i < numofneurons; i++)
                     {
-                        for (int i = 0; i < numofneurons; i++)
+                        for (int j = 0; j < numofprevneurons + 1; j++)
                         {
-                            string line = "";
-                            for (int j = 0; j < numofprevneurons + 1; j++)
+                            if (j == numofprevneurons)
                             {
-                                line += weights[i, j].ToString(System.Globalization.CultureInfo.InvariantCulture) + ";";
+                                // Bias (последний вес) — инициализируем нулём
+                                weights[i, j] = 0.0;
                             }
-                            sw.WriteLine(line.TrimEnd(';'));
+                            else
+                            {
+                                // Веса: равномерное распределение в [-scale, +scale]
+                                weights[i, j] = (random.NextDouble() * 2.0 - 1.0) * scale;
+                            }
                         }
                     }
-                    break;
-                default:
+
+                    // Сохранение в CSV
+                    string[] lines = new string[numofneurons];
+                    for (int i = 0; i < numofneurons; i++)
+                    {
+                        string[] values = new string[numofprevneurons + 1];
+                        for (int j = 0; j < numofprevneurons + 1; j++)
+                        {
+                            values[j] = weights[i, j]
+                                .ToString(System.Globalization.CultureInfo.InvariantCulture)
+                                .Replace('.', ',');
+                        }
+                        lines[i] = string.Join(";", values);
+                    }
+                    File.WriteAllLines(path, lines);
                     break;
             }
             return weights;
         }
 
-        public double[] GenerateRandomWeightsCLT(int count, Random random)
-        {
-            double[] weights = new double[count];
-            const int samples = 12;
 
-            for (int i = 0; i < count; i++)
-            {
-                double sum = 0;
-                for (int j = 0; j < samples; j++)
-                {
-                    sum += random.NextDouble();
-                }
-                weights[i] = (sum - samples / 2.0) / Math.Sqrt(samples / 12.0);
-
-            }
-
-            return weights;
-        }
-
-        abstract public void Recognizee(Network net, Layer nextLayer);
-        abstract public double[] BackwardPass(double[] stuff);
+        abstract public void Recognize(Network net, Layer nextLayer);
+        abstract public double[] BackwardPass(double[] staff);
     }
 }

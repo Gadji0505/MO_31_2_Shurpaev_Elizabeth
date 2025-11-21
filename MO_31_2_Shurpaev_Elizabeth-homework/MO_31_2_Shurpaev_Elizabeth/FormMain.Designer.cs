@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -48,7 +48,7 @@
             this.button15 = new System.Windows.Forms.Button();
             this.numericUpDown_NecessaryOutput = new System.Windows.Forms.NumericUpDown();
             this.button16 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
+            this.buttonTest = new System.Windows.Forms.Button();
             this.button_CheckWeightsFile = new System.Windows.Forms.Button();
             this.label_Output = new System.Windows.Forms.Label();
             this.label_Probability = new System.Windows.Forms.Label();
@@ -260,15 +260,15 @@
             this.button16.Text = "Save Train Sample";
             this.button16.UseVisualStyleBackColor = true;
             // 
-            // button17
+            // buttonTest
             // 
-            this.button17.Location = new System.Drawing.Point(135, 193);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(68, 35);
-            this.button17.TabIndex = 17;
-            this.button17.Text = "Save Test Sample";
-            this.button17.UseVisualStyleBackColor = true;
-            this.button17.Click += new System.EventHandler(this.button_SaveTrainSample_Click);
+            this.buttonTest.Location = new System.Drawing.Point(135, 193);
+            this.buttonTest.Name = "buttonTest";
+            this.buttonTest.Size = new System.Drawing.Size(68, 35);
+            this.buttonTest.TabIndex = 17;
+            this.buttonTest.Text = "Save Test Sample";
+            this.buttonTest.UseVisualStyleBackColor = true;
+            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
             // button_CheckWeightsFile
             // 
@@ -322,23 +322,23 @@
             // 
             // chart_Eavr
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart_Eavr.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chart_Eavr.ChartAreas.Add(chartArea3);
             this.chart_Eavr.IsSoftShadows = false;
             this.chart_Eavr.Location = new System.Drawing.Point(222, -1);
             this.chart_Eavr.Name = "chart_Eavr";
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Name = "Series1";
-            this.chart_Eavr.Series.Add(series1);
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Name = "Series1";
+            this.chart_Eavr.Series.Add(series3);
             this.chart_Eavr.Size = new System.Drawing.Size(547, 302);
             this.chart_Eavr.TabIndex = 23;
             this.chart_Eavr.Text = "chart1";
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            title1.Name = "Title1";
-            title1.Text = "График средних энергии ошибок";
-            this.chart_Eavr.Titles.Add(title1);
+            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            title3.Name = "Title1";
+            title3.Text = "График средних энергии ошибок";
+            this.chart_Eavr.Titles.Add(title3);
             // 
             // FormMain
             // 
@@ -353,7 +353,7 @@
             this.Controls.Add(this.label_Probability);
             this.Controls.Add(this.label_Output);
             this.Controls.Add(this.button_CheckWeightsFile);
-            this.Controls.Add(this.button17);
+            this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.button16);
             this.Controls.Add(this.numericUpDown_NecessaryOutput);
             this.Controls.Add(this.button13);
@@ -401,7 +401,7 @@
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.NumericUpDown numericUpDown_NecessaryOutput;
         private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.Button buttonTest;
         private System.Windows.Forms.Button button_CheckWeightsFile;
         private System.Windows.Forms.Label label_Output;
         private System.Windows.Forms.Label label_Probability;
